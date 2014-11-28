@@ -2,45 +2,68 @@
 // 
 
 
-ChatText myChat = new ChatText();
+ChatText myChat = new ChatText(8, 24, 
+  "http://66.25.85.79/SLchat.txt");
 
 
 class ChatText
 {
-  String[] lines =  new String[5];
+  String chatFile;
+  int numChatLines;
+  int fontSize;
+  String line;
   
-  ChatText()
+  ChatText(int numLines, int size, String fileName)
   {
-    for(int i=0; i<lines.length; ++i)
-      lines[i] = "";
+    numChatLines = numLines;
+    fontSize = size;
+    chatFile = fileName;
+    line = "";
   }
   
-  void drawText()
+  int getFontSize()
   {
-    for (int i=0; i<lines.length; ++i)
-      text(lines[i], -width/2, height/2 - 42*(i+1));
+    return fontSize;
+  }
+  
+  void drawChat()
+  {
+    String[] txt = loadStrings(chatFile);
+    int iMax = txt.length;
+    int txtLen = min(numChatLines, iMax);
+    for (int i=0; i<txtLen; ++i)
+      text(txt[iMax-i], -width/2, height/2 - fontSize*(i+1));
+    text(line, -width/2, height/2 - fontSize);
   }
 
   void setLine(String l)
   {
-    lines[0] = l;
+    line = l;
+  }
+  
+  void addLine(String l)
+  {
+    String[] txtIn = loadStrings(chatFile);
+    String[] txtOut = append(txtIn, l);
+    saveStrings(chatFile, txtOut);
   }
   
   String getLine()
   {
-    return lines[0];
+    return line;
   }
   
   void addChar(char c)
   {
-    lines[0] += str(c);
+    line += str(c);
   }
   
   void scrollText()
   {
-    for (int i=1; i<lines.length; ++i)
-      lines[lines.length-i] = lines[lines.length-1-i];
-    lines[0] = "";
+    String[] txt = loadStrings(chatFile);
+    txt = append(txt, line);
+    line = "";
+    saveStrings(chatFile, txt);
   }
 } 
 
@@ -63,7 +86,6 @@ void keyPressed()
   }
   else
     myChat.addChar(key);
-
 }
 
 
