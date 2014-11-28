@@ -5,6 +5,10 @@
 // 
 
 
+int bgRed = 192;
+int bgGreen = 192;
+int bgBlue = jsBlue;
+
 void setup()
 {
   // make it big
@@ -17,7 +21,7 @@ void draw()
   // display the environment
   // 
   // make it golden
-  background(255, 255, 0);
+  background(bgRed, bgGreen, bgBlue);
   fill(128, 0, 255);
   stroke(0, 255, 128);
   textAlign(LEFT, CENTER);
@@ -29,11 +33,21 @@ void draw()
   // light it up
   lights();
   
+  // get the inworld information
+  // 
+  // get the land profile
+  // 
+  // get the avatar descriptions
+  // 
+  // get the STL model inf
+  
+  // draw the scene
+  // 
   // display the avatars
-  
+  // 
   // display the STL models
-  box(100);
-  
+  stl.drawSTL(frameCount);
+  //
   // display the chat text
   myChat.drawText();
 }
